@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     while (true)
     {
         recvFrom(channel, recvBuffer, 10000);
-        printf("Recieved Message: %s", recvBuffer);
+        printf("Recieved Message: %s\n", recvBuffer);
         fflush(stdout);
     }
     return 0;

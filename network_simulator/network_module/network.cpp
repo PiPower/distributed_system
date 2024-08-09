@@ -3,6 +3,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <thread>
+#include <signal.h>
 #include "connection_binder.hpp"
 
 using namespace std;
@@ -13,6 +14,8 @@ void handleConnection(int fd);
 
 int main()
 {
+    signal(SIGPIPE, SIG_IGN);
+
     int fd;
     fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if( fd == -1 )

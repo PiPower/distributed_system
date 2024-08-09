@@ -68,7 +68,7 @@ int routeMsg(char *msgBuffer, const volatile ConnectionList *connection)
         {
             if( connection->isConnectionActive[i] && i != source)
             {
-                send(connection->descriptors[i].fd, msgBuffer,  payloadSize + sizeof(PacketHeader), 0);
+                int n = send(connection->descriptors[i].fd, msgBuffer,  payloadSize + sizeof(PacketHeader), 0);
             }
         }
     }
