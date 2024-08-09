@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+  enum RequestType {
+    Put = 0;
+    Get = 1;
+  }
+
+message RequestMessage
+{
+    RequestType type = 1;
+    optional string key = 2;
+    optional string value = 3;
+}
