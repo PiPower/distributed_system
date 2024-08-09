@@ -7,7 +7,7 @@ using namespace std;
 
 static ConnectionList connectionList;
 
-static void addEntryIntoList(int connectionFd, int index);
+static void addEntryIntoList(int connectionFd, uint8_t index);
 
 
 int bindConnection(int connectionFd)
@@ -24,11 +24,11 @@ int bindConnection(int connectionFd)
 }
 
 
-void addEntryIntoList(int connectionFd, int index)
+void addEntryIntoList(int connectionFd, uint8_t index)
 {
     connectionList.isConnectionActive[index] = true;
     connectionList.descriptors[index].fd = connectionFd;
     // thread must start last as it needs all the data to be ready
-    connectionList.descriptors[index].channelExecutor = thread{handleChannel, connectionFd, &connectionList};
+    connectionList.descriptors[index].channelExecutor = thread{handleChannel, connectionFd, index, &connectionList};
 }
 

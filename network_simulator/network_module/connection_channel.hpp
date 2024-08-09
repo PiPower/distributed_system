@@ -11,7 +11,7 @@ struct PacketHeader
     uint32_t payloadSize;
 };
 
-void handleChannel(int client_fd, const volatile ConnectionList* connection);
+void handleChannel(int client_fd, uint8_t id, const volatile ConnectionList* connection);
 int prepareMsg(int client_fd, int index, char* msgBuffer, unsigned int buffSize);
 int routeMsg(char* msgBuffer, const volatile ConnectionList* connection);
 #endif

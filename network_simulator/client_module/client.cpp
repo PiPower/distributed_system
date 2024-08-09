@@ -66,3 +66,35 @@ int sendTo(const ConnectedChannel &channel, const uint8_t reciever, const void *
     }
     return n;
 }
+
+int recvFrom(ConnectedChannel& channel, char *msgBuffer, unsigned int buffSize)
+{
+    PacketHeader header;
+    // read EXACTLY header size of bytes
+    int readSizeHeader = 0;
+    int n = recv( channel.fd, msgBuffer, sizeof(PacketHeader), 0);
+    readSizeHeader += n;
+    while (readSizeHeader< sizeof(PacketHeader))
+    {
+        n = recv( channel.fd, msgBuffer, sizeof(PacketHeader) - readSizeHeader, 0);
+        readSizeHeader += n;
+    }
+    memcpy(&header, msgBuffer, sizeof(PacketHeader));
+    
+
+    if(header.payloadSize > buffSize - sizeof(PacketHeader))
+    {
+        printf("payload size too large for buffer of size %d", buffSize);
+        std::terminate();
+    }
+
+    //read EXACTLY payload size of bytes
+    int readSizeBody = 0;
+    while (readSizeBody < header.payloadSize )
+    {
+        int n = recv(channel.fd, msgBuffer + readSizeBody, header.payloadSize - readSizeBody, 0);
+        readSizeBody += n;
+    }
+
+    return readSizeBody ;
+}
