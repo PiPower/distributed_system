@@ -1,6 +1,7 @@
 #include "connection_binder.hpp"
 #include "connection_list.hpp"
 #include "connection_channel.hpp"
+#include <sys/socket.h>
 #include <thread>
 using namespace std;
 
@@ -11,9 +12,9 @@ static void addEntryIntoList(int connectionFd, int index);
 
 int bindConnection(int connectionFd)
 {
-    for(int i=0 ; i < SLOT_COUNT; i++)
+    for(int i=0; i < SLOT_COUNT; i++)
     {
-        if(!connectionList.isConnectionActive)
+        if(!connectionList.isConnectionActive[i])
         {
             addEntryIntoList(connectionFd, i);
             return 1;
