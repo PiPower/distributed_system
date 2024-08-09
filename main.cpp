@@ -1,4 +1,3 @@
-#include "proto/messages.pb.h"
 #include <ifaddrs.h>
 #include <sys/socket.h>
 #include <sys/un.h>

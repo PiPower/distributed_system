@@ -3,7 +3,8 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <thread>
-#include "connection_list.hpp"
+#include "connection_binder.hpp"
+
 using namespace std;
 
 constexpr const char* server_path = "/tmp/network_sim";
@@ -62,7 +63,7 @@ void handleConnection(int fd)
         socklen_t len = sizeof(sockaddr_un);
         int clientfd = accept(fd, (sockaddr*)&addr, &len);
 
-        addConnection(clientfd);
+        bindConnection(clientfd);
 
     }
 }

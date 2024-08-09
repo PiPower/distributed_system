@@ -23,8 +23,6 @@ set (CMAKE_CXX_STANDARD 20)
 
 project(Entity C CXX)
 
-add_subdirectory("network_simulator")
-
 find_package(Protobuf CONFIG REQUIRED)
 message(STATUS "Using protobuf ${Protobuf_VERSION}")
 
@@ -49,6 +47,8 @@ add_custom_command(
 
 include_directories("/home/mateusz/grpc_lib/include")
 
+add_subdirectory("network_simulator")
+
 add_executable(entity main.cpp ${hw_proto_srcs})
-target_link_libraries(entity protobuf::libprotobuf)
+target_link_libraries(entity client protobuf::libprotobuf)
 
