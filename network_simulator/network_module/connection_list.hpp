@@ -7,6 +7,10 @@
 #define BROADCAST_ID 255
 #define SLOT_COUNT 254
 
+#define THREAD_UNSUED 0x00
+#define THREAD_STARTING 0x01
+#define THREAD_RUNNING 0x02
+
 
 struct ConnenctionDescription
 {
@@ -16,7 +20,7 @@ struct ConnenctionDescription
 
 struct ConnectionList
 {
-    bool isConnectionActive[SLOT_COUNT];
+    uint8_t isConnectionActive[SLOT_COUNT];
     ConnenctionDescription descriptors[SLOT_COUNT];
 };
 

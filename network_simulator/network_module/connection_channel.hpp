@@ -2,6 +2,11 @@
 #define CONNECTION_CHANNEL
 #include "connection_list.hpp"
 
+#define CONNECTION_NOT_ESTABLISHED 0x00
+#define CONNECTION_ESTABLISHED 0x01
+#define CONNECTION_ERROR 0x02
+#define CONNECTION_ACK 0x03
+
 struct PacketHeader
 {
     // to keep data aligned 
@@ -11,7 +16,8 @@ struct PacketHeader
     uint32_t payloadSize;
 };
 
-void handleChannel(int client_fd, uint8_t id, const volatile ConnectionList* connection);
+void handleChannel(int client_fd, uint8_t id, const volatile ConnectionList* connection, volatile uint8_t *connectionStatus);
 int prepareMsg(int client_fd, int index, char* msgBuffer, unsigned int buffSize);
 int routeMsg(char* msgBuffer, const volatile ConnectionList* connection);
+
 #endif
