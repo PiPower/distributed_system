@@ -7,10 +7,15 @@
 #define CONNECTION_ERROR 0x02
 #define CONNECTION_ACK 0x03
 
+#define PROTOCOL_NONE 0x00
+#define PROTOCOL_RAFT 0x01
+
 struct PacketHeader
 {
     // to keep data aligned 
-    uint8_t reserved[2];
+    uint8_t reserved;
+    //----------------
+    uint8_t protocol;
     uint8_t dest;
     uint8_t src;
     uint32_t payloadSize;

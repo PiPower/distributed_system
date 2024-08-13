@@ -44,9 +44,10 @@ ConnectedChannel establishConnection()
 int sendTo(const ConnectedChannel &channel, const uint8_t reciever, const void *msg, const uint32_t msgLen)
 {
     PacketHeader header;
-    memcpy(&header.dest, &reciever, 1 );
-    memcpy(&header.src, &channel.id, 1 );
-    memcpy(&header.payloadSize, &msgLen, 4 );
+    header.protocol = PROTOCOL_NONE;
+    header.dest = reciever;
+    header.src = channel.id;
+    header.payloadSize = msgLen;
 
     iovec buffers[2] ;
     buffers[0].iov_base = &header;
@@ -67,7 +68,7 @@ int sendTo(const ConnectedChannel &channel, const uint8_t reciever, const void *
     return n;
 }
 
-int recvFrom(ConnectedChannel& channel, char *msgBuffer, unsigned int buffSize)
+int recvFrom(ConnectedChannel& channel, char *msgBuffer, unsigned int buffSize, uint8_t* src, uint8_t* protocol)
 {
     PacketHeader header;
     // read EXACTLY header size of bytes
@@ -81,6 +82,15 @@ int recvFrom(ConnectedChannel& channel, char *msgBuffer, unsigned int buffSize)
     }
     memcpy(&header, msgBuffer, sizeof(PacketHeader));
     
+    if(src)
+    {
+        *src = header.src;
+    }
+
+    if(protocol)
+    {
+        *protocol = header.protocol;
+    }
 
     if(header.payloadSize > buffSize - sizeof(PacketHeader))
     {
